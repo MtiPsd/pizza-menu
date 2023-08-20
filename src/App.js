@@ -93,16 +93,14 @@ function Menu() {
   );
 }
 
-function Pizza({ photo, name, ingredient, price, soldOut }) {
-  if (soldOut) return null;
-
+function Pizza({ photo, name, ingredient, price, soldOut }, props) {
   return (
-    <li className='pizza'>
+    <li className={`pizza ${soldOut ? ' sold-out' : ''}`}>
       <img src={photo} alt={name}></img>
       <div>
         <h3>{name}</h3>
         <p>{ingredient}</p>
-        <span>{price}</span>
+        <span>{soldOut ? 'SOLD OUT' : price}</span>
       </div>
     </li>
   );
@@ -113,26 +111,26 @@ function Footer() {
   const openHours = 12;
   const closeHour = 23;
   const isOpen = hour >= openHours && hour <= closeHour;
-  ///////////////////////////////////////////
-  if (isOpen) {
-    console.log("We're currently open");
-  } else {
-    console.log("Sorry we're closed");
-  }
 
   return (
     <footer className='footer'>
       {isOpen ? (
-        <div className='order'>
-          <p>We're open until {closeHour}:00. Come visit us or order online</p>
-          <button className='btn'>Order</button>
-        </div>
+        <Order closeHour={closeHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHours}:00 and {closeHour}:00
         </p>
       )}
     </footer>
+  );
+}
+
+function Order({ closeHour }) {
+  return (
+    <div className='order'>
+      <p>We're open until {closeHour}:00. Come visit us or order online</p>
+      <button className='btn'>Order</button>
+    </div>
   );
 }
 
