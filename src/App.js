@@ -68,10 +68,33 @@ function Menu() {
   return (
     <main className='menu'>
       <h2>Our menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <Pizza
+        name='Pizza Spinaci'
+        ingredient='Tomato, mozarella, spinach, and ricotta cheese'
+        photo='pizzas/spinaci.jpg'
+        price={10}
+      />
+      <Pizza
+        name='Pizza Margherita'
+        ingredient='Tomato and mozarella'
+        photo='pizzas/funghi.jpg'
+        price={12}
+      />
     </main>
+  );
+}
+
+function Pizza(props) {
+  console.log(props);
+  return (
+    <div className='pizza'>
+      <img src={props.photo} alt={props.name}></img>
+      <div>
+        <h3>{props.name}</h3>
+        <p>{props.ingredient}</p>
+        <span>{props.price}</span>
+      </div>
+    </div>
   );
 }
 
@@ -81,26 +104,16 @@ function Footer() {
   const closeHour = 22;
   const isOpen = hour >= openHours && hour <= closeHour;
   ///////////////////////////////////////////
-  // if (isOpen) {
-  //   alert("We're currently open");
-  // } else {
-  //   alert("Sorry we're closed");
-  // }
+  if (isOpen) {
+    console.log("We're currently open");
+  } else {
+    console.log("Sorry we're closed");
+  }
 
   return (
     <footer className='footer'>
       {new Date().toLocaleTimeString()}. We're currently open
     </footer>
-  );
-}
-
-function Pizza() {
-  return (
-    <div>
-      <h3 className='btn btn--primary'>Pizza</h3>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-      <img src='pizzas/spinaci.jpg' alt='spinaci'></img>
-    </div>
   );
 }
 
