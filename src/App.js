@@ -65,43 +65,53 @@ function Header() {
 }
 
 function Menu() {
+  // const pizzas = [];
+  const pizzas = pizzaData;
+  const pizzasCount = pizzas.length;
+
   return (
     <main className='menu'>
       <h2>Our menu</h2>
-      <Pizza
-        name='Pizza Spinaci'
-        ingredient='Tomato, mozarella, spinach, and ricotta cheese'
-        photo='pizzas/spinaci.jpg'
-        price={10}
-      />
-      <Pizza
-        name='Pizza Margherita'
-        ingredient='Tomato and mozarella'
-        photo='pizzas/funghi.jpg'
-        price={12}
-      />
+
+      {pizzasCount > 0 ? (
+        <ul className='pizzas'>
+          {pizzaData.map((pizza, index) => (
+            <Pizza
+              key={index}
+              name={pizza.name}
+              ingredient={pizza.ingredients}
+              photo={pizza.photoName}
+              price={pizza.price}
+              soldOut={pizza.soldOut}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>⚠️ We're still working on our menu please come back later</p>
+      )}
     </main>
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({ photo, name, ingredient, price, soldOut }) {
+  if (soldOut) return null;
+
   return (
-    <div className='pizza'>
-      <img src={props.photo} alt={props.name}></img>
+    <li className='pizza'>
+      <img src={photo} alt={name}></img>
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredient}</p>
-        <span>{props.price}</span>
+        <h3>{name}</h3>
+        <p>{ingredient}</p>
+        <span>{price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
 function Footer() {
   const hour = new Date().getHours();
   const openHours = 12;
-  const closeHour = 22;
+  const closeHour = 23;
   const isOpen = hour >= openHours && hour <= closeHour;
   ///////////////////////////////////////////
   if (isOpen) {
@@ -112,7 +122,16 @@ function Footer() {
 
   return (
     <footer className='footer'>
-      {new Date().toLocaleTimeString()}. We're currently open
+      {isOpen ? (
+        <div className='order'>
+          <p>We're open until {closeHour}:00. Come visit us or order online</p>
+          <button className='btn'>Order</button>
+        </div>
+      ) : (
+        <p>
+          We're happy to welcome you between {openHours}:00 and {closeHour}:00
+        </p>
+      )}
     </footer>
   );
 }
